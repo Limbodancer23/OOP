@@ -16,24 +16,25 @@ public class UserView {
     }
 
     public void run(){
+        Scan scan = new Scan();
         Commands com;
 
         while (true) {
             System.out.print("-----------------------------------------------------\n" +
                     "1)CREATE\n2)READ\n3)LIST\n4)UPDATE\n5)DELETE\n6)NONE\n7)EXIT\n");
-            String command = prompt("Введите команду: ");
+            String command = scan.prompt("Введите команду: ");
             com = Commands.valueOf(command);
             System.out.println("---------------------------------------------------");
             if (com == Commands.EXIT) return;
             switch (com) {
                 case CREATE:
-                    String firstName = prompt("Имя: ");
-                    String lastName = prompt("Фамилия: ");
-                    String phone = prompt("Номер телефона: ");
+                    String firstName = scan.prompt("Имя: ");
+                    String lastName = scan.prompt("Фамилия: ");
+                    String phone = scan.prompt("Номер телефона: ");
                     userController.saveUser(new User(firstName, lastName, phone));
                     break;
                 case READ:
-                    String id = prompt("Идентификатор пользователя: ");
+                    String id = scan.prompt("Идентификатор пользователя: ");
                     try {
                         User user = userController.readUser(Long.parseLong(id));
                         System.out.println(user);
@@ -54,10 +55,10 @@ public class UserView {
                     break;
                 case UPDATE:
                     try {
-                        Long userid = Long.parseLong(prompt("Идентификатор пользователя: "));
-                        String uName = prompt("Enter user name: ");
-                        String ULastName = prompt("Enter user last name: ");
-                        String UPhoneNum = prompt("Enter user phone number: ");
+                        Long userid = Long.parseLong(scan.prompt("Идентификатор пользователя: "));
+                        String uName = scan.prompt("Enter user name: ");
+                        String ULastName = scan.prompt("Enter user last name: ");
+                        String UPhoneNum = scan.prompt("Enter user phone number: ");
                         User newUser = new User(uName, ULastName, UPhoneNum);
                         userController.updateUser(userid, newUser);
                     }catch (Exception e){
@@ -65,7 +66,7 @@ public class UserView {
                     }
                     break;
                 case DELETE:
-                    String iduser = prompt("Идентификатор пользователя: ");
+                    String iduser = scan.prompt("Идентификатор пользователя: ");
                     try {
                         User user = userController.deleteUser(Long.parseLong(iduser));
                         System.out.println(user);
@@ -78,11 +79,5 @@ public class UserView {
                     System.out.println("Waiting...");
             }
         }
-    }
-
-    private String prompt(String message) {
-        Scanner in = new Scanner(System.in);
-        System.out.print(message);
-        return in.nextLine();
     }
 }

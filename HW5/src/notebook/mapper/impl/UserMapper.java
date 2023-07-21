@@ -10,7 +10,7 @@ public class UserMapper implements Mapper<User, String> {
     }
 
     @Override
-    public User toOutput(String s) {
+    public User toOutput(String s)throws Error {
         String[] lines = s.split(",");
         long id;
         if (isDigit(lines[0])) {
